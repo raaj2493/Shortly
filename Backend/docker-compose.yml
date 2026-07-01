@@ -3,11 +3,12 @@ services:
     image: postgres:latest
     container_name: url_shortner_db
     environment:
-      POSTGRES_USER=postgres
-      POSTGRES_PASSWORD=postgres
-      POSTGRES_DB=postgres
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      
     ports:
-      - 5432:5432
+      - ${DB_PORT}:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -23,7 +24,7 @@ services:
     networks:
       - app_network
   
-  volumes:
+volumes:
   postgres_data:
   redis_data:
 
