@@ -46,5 +46,11 @@ func(r *UserRepo)GetUserByEmail(ctx context.Context, email string ) (*models.Use
 	`
 
 	var user models.User
-	err := r.db.
+	err := r.db.QueryRowContext(ctx , query , email).Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash, &user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		return nil, err // Will return sql.ErrNoRows if user isn't found
+	}
+
+	return &user, nil
 }
