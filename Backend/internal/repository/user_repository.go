@@ -8,16 +8,16 @@ import (
 	"github.com/raaj2493/Shortly/Backend/internal/models"
 )
 
-type UserRepo struct {
+type UserRepository struct {
 	db *sql.DB
 }
 
-func NewUserRepo (db *sql.DB) *UserRepo{
-	return &UserRepo{db: db}
+func NewUserRepository (db *sql.DB) *UserRepository{
+	return &UserRepository{db: db}
 }
 
 // CreateUser inserts a brand new user into the database
-func(r *UserRepo) CreateUser(ctx context.Context , user *models.User) error {
+func(r *UserRepository) CreateUser(ctx context.Context , user *models.User) error {
      // Set a quick safety timer. If the database takes longer than 3 seconds, cancel it.
 	 ctx , cancel := context.WithTimeout(ctx , 3*time.Second)
 	 defer cancel()
@@ -35,7 +35,7 @@ func(r *UserRepo) CreateUser(ctx context.Context , user *models.User) error {
 }
 
 // GetUserByEmail searches for a user by their unique email
-func(r *UserRepo)GetUserByEmail(ctx context.Context, email string ) (*models.User , error ){
+func(r *UserRepository)GetUserByEmail(ctx context.Context, email string ) (*models.User , error ){
 	ctx , cancel := context.WithTimeout(ctx , 3*time.Second)
 	defer cancel()
 
