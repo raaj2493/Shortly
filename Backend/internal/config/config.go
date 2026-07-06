@@ -18,6 +18,8 @@ type Config struct {
 	JWTSecret  string
 }
 
+
+
 func LoadConfig()*Config{
 
 	err := godotenv.Load()
@@ -33,7 +35,7 @@ func LoadConfig()*Config{
 		DBName:     getEnv("DB_NAME", "url_shortener"),
 		DBPort:     getEnv("DB_PORT", "5432"),
 		DBHost:     getEnv("DB_HOST", "localhost"),
-		JWTSecret:  getEnv("JWT_SECRET", ""),
+		JWTSecret: getEnv("JWT_SECRET", "fallback_secret"),
 	}
 }
 
