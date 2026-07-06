@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"unicode/utf8"
+
 	"strings"
 )
 
