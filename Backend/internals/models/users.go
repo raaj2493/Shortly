@@ -1,6 +1,5 @@
 package models
 
-package model
 
 import "time"
 
