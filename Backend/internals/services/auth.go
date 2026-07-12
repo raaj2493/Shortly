@@ -4,10 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
-	"github.com/go-redis/redis/v8"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/redis/go-redis/v9"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/raaj2493/Shortly/Backend/internals/config"
@@ -72,8 +73,8 @@ func (s *AuthService) Login(ctx context.Context, email , password string) (strin
 	}
 
 	// Generate JWT token
-	token := jwt.NewWithClaims(jwt.SigningMethodES256 , jwt.MapClaims{
-		"sub": user.ID,
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256 , jwt.MapClaims{
+		"sub": strconv.Itoa(user.ID),
 		"exp": time.Now().Add(24 * time.Hour).Unix(),
 	})
 
