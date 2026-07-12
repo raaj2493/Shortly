@@ -10,7 +10,7 @@ type Config struct {
     DatabaseDSN  string
     RedisAddr    string
     RedisPass    string
-    JWTSecret    string
+    JWTSecret    string `env:"JWT_SECRET"`
 }
 
 func Load() *Config{
