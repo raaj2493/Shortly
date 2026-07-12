@@ -37,5 +37,20 @@ func ( r *UserRepository) CreateUser (ctx context.Context , user *models.User) e
 	return nil
 }
 
-func 
+func (r *UserRepository) GetUserByEmail (ctx context.Context , email string ) (*models.User , error){
+	query := `
+		SELECT id, email, password_hash, created_at, updated_at
+		FROM users
+		WHERE email = $1
+	`
+	var user models.User
+	err := r.db.QueryRowContext(ctx, query, email).Scan(&user.ID, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil , nil
+		}
+		return nil , err
+	}
+	return &user , nil
+}
 
