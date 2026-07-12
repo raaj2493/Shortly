@@ -27,5 +27,15 @@ func ( r *UserRepository) CreateUser (ctx context.Context , user *models.User) e
 	`
 
 	now := time.Now().UTC()
+
+	err := r.db.QueryRowContext(ctx, query, user.Email, user.Password, now, now).Scan(&user.ID)
+	if err != nil {
+		return err
+	}
+	user.CreatedAt = now
+	user.UpdatedAt = now
+	return nil
 }
+
+func 
 
