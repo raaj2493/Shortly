@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS urls (
-    id SERIAL PRIMARY KEY,
-    original_url TEXT NOT NULL,
-    short_code VARCHAR(10) UNIQUE NOT NULL,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    visit_count INTEGER DEFAULT 0
-);
