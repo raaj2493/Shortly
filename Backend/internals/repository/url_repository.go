@@ -27,6 +27,8 @@ func (r *URLRepository) CreateURL(ctx context.Context, originalURL , shortCode s
 	if err != nil {
 		return nil, err
 	}
+	url.OriginalURL = originalURL
+	url.ShortCode = shortCode
 	return &url, nil
 }
 

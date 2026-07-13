@@ -47,18 +47,7 @@ func main() {
 		w.Write([]byte(`{"status":"ok"}`))
 	})
 
-
-	//6. Initialize the Services
-      addr := ":" + cfg.ServerPort
-	  log.Printf("Starting server on %s", addr)
-
-	  err := http.ListenAndServe(addr, mux)
-	  if err != nil {
-		log.Fatal(err)
-	  }
-
-
-// URL shortener endpoints
+	// URL shortener endpoints
 	mux.HandleFunc("POST /api/urls", urlHandler.CreateShortURL)
 	mux.HandleFunc("GET /{shortCode}", urlHandler.RedirectToOriginal)
 
