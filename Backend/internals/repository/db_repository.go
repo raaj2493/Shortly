@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"log"
 "fmt"
-	"github.com/golang-migrate/migrate/database"
 	_ "github.com/lib/pq"
 )
 
