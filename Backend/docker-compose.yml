@@ -1,15 +1,25 @@
-version: '3.9'
-
 services:
-  postgres:
+  app:
+    build: .
+    container_name: url-shortener-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
     image: postgres:16-alpine
-    container_name: url_shortner_postgres
+    container_name: url-shortener-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -17,38 +27,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-      start_period: 30s
+    restart: unless-stopped
 
   redis:
     image: redis:7-alpine
-    container_name: url_shortner_redis
-    ports:
-      - 6379:6379
-
+    container_name: url-shortener-redis
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 5s
       retries: 5
-      start_period: 30s
-
-  app:
-    build: .
-    image: url_shortner
-    container_name: url_shortner_app
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-    ports:
-      - 8080:8080
-    depends_on:
-      - postgres
-      - redis
+    restart: unless-stopped
 
 volumes:
   pgdata:
