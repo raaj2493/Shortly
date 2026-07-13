@@ -1,0 +1,31 @@
+package service
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"errors"
+	"fmt"
+	"time"
+
+	"github.com/redis/go-redis/v9"
+	"github.com/raaj2493/Shortly/Backend/internals/models"
+	"github.com/raaj2493/Shortly/Backend/internals/repository"
+)
+
+const (
+	shortCodeLength = 6
+	cachePrefix     = "url:"
+	cacheTTL        = 1 * time.Hour
+	maxRetries      = 5
+)
+
+type URLService struct {
+	repo  *repository.URLRepository
+	redis *redis.Client
+}
+
+func NewURLService(repo *repository.URLRepository, redis *redis.Client) *URLService {
+	return &URLService{repo: repo, redis: redis}
+}
+
