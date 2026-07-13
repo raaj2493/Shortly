@@ -36,7 +36,7 @@ func main() {
 	//Initialise Layers
 	urlRepository := repository.NewURLRepository(db)
 	urlService := services.NewURLService(urlRepository, redisClient)
-	urlHandler := handlers.NewURLHandler(urlService)
+	urlHandler := handler.NewURLHandler(urlService)
 
 
 	//5. Setting UP the server

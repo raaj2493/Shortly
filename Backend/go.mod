@@ -11,3 +11,5 @@ require (
 	github.com/lib/pq v1.12.3
 	go.uber.org/atomic v1.11.0 // indirect
 )
+
+replace github.com/raaj2493/Shortly/Backend => .
